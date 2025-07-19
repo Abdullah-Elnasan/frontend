@@ -67,10 +67,20 @@
 
 <script setup>
 import { onMounted, ref, watch, nextTick } from 'vue'
-import debounce from 'lodash/debounce';
 import { usePostsCategory } from '~/composables/usePostsCategory.js'
 import { mdiCalendar, mdiMapMarkerOutline } from '@mdi/js'
 import { useRoute } from 'vue-router'
+
+
+function debounce(fn, delay) {
+  let timeout
+  return (...args) => {
+    clearTimeout(timeout)
+    timeout = setTimeout(() => {
+      fn(...args)
+    }, delay)
+  }
+}
 
 const route = useRoute()
 const id = computed(() => route.params.id)

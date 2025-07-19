@@ -78,16 +78,23 @@
     </v-col>
   </div>
 </template>
-
 <script setup>
 import { mdiClipboardTextSearchOutline, mdiCalendar } from '@mdi/js';
-import { ref, watch, onMounted, onUnmounted } from 'vue';
-import debounce from 'lodash/debounce';
+import { ref, watch, onMounted, onUnmounted, nextTick } from 'vue';
+
+function debounce(fn, delay) {
+  let timeout
+  return (...args) => {
+    clearTimeout(timeout)
+    timeout = setTimeout(() => {
+      fn(...args)
+    }, delay)
+  }
+}
 
 const path2 = mdiClipboardTextSearchOutline;
 const path = mdiCalendar;
 
-// Reactive state for search query and results
 const searchQuery = ref('');
 const posts = ref([]);
 const error = ref(null);
@@ -95,25 +102,29 @@ const pending = ref(false);
 const noMore = ref(false);
 const page = ref(1);
 const dialog = ref(false);
-const scrollPosition = ref(0)
-// Intersection Observer for infinite scrolling
+const scrollPosition = ref(0);
 const observerTarget = ref(null);
 let observer = null;
+let abortController = null;
 
-// Simulated searchPost function (replace with actual API call)
-async function searchPost(query, pageNum = 1) {
-
+// دالة البحث باستخدام AbortController
+async function searchPost(query, pageNum = 1, signal) {
   const config = useRuntimeConfig();
   try {
-    // Simulated API call with pagination (15 articles per page)
-    const response = await fetch(`${config.public.apiBase}/posts?search=${encodeURIComponent(query)}&page=${pageNum}&limit=15`);
+    const response = await fetch(
+      `${config.public.apiBase}/posts?search=${encodeURIComponent(query)}&page=${pageNum}&limit=15`,
+      { signal }
+    );
     const data = await response.json();
     return {
       posts: data.posts || [],
-      total: data.total || 0, // Total number of articles for the query
+      total: data.total || 0,
       error: null
     };
   } catch (err) {
+    if (err.name === 'AbortError') {
+      return { posts: [], total: 0, error: null }; // تم الإلغاء
+    }
     return {
       posts: [],
       total: 0,
@@ -122,8 +133,7 @@ async function searchPost(query, pageNum = 1) {
   }
 }
 
-// Debounced search function to limit API calls
-// const debouncedSearch = debounce( loadMore, 300);
+// البحث المؤجل مع دعم الإلغاء
 const debouncedSearch = debounce(async (isNewSearch = true) => {
   if (!searchQuery.value || searchQuery.value.trim() === '') {
     posts.value = [];
@@ -134,41 +144,55 @@ const debouncedSearch = debounce(async (isNewSearch = true) => {
     return;
   }
 
+  if (abortController) {
+    abortController.abort();
+  }
+  abortController = new AbortController();
+  const signal = abortController.signal;
+
   pending.value = true;
-  const result = await searchPost(searchQuery.value, isNewSearch ? 1 : page.value);
+  const result = await searchPost(searchQuery.value, isNewSearch ? 1 : page.value, signal);
+
   if (isNewSearch) {
     posts.value = result.posts || [];
     page.value = 1;
   } else {
     posts.value = [...posts.value, ...(result.posts || [])];
   }
+
   error.value = result.error;
   noMore.value = posts.value.length >= (result.total || 0) || result.posts.length === 0;
   pending.value = false;
+
   if (!isNewSearch && !noMore.value) {
     page.value += 1;
   }
 }, 500);
 
-// Watch for changes in searchQuery to trigger new search
+// المراقبة على تغيّر النص
 watch(searchQuery, () => {
-  debouncedSearch(true); // New search resets the results
+  debouncedSearch(true);
 });
 
+// إلغاء البحث عند إغلاق النافذة
+watch(dialog, (val) => {
+  if (!val && abortController) {
+    abortController.abort();
+  }
+});
 
 watch(posts, async () => {
-  await nextTick()
-  setupObserver(); // Re-setup observer after posts update
+  await nextTick();
+  setupObserver();
   setTimeout(() => {
-    window.scrollTo({ top: scrollPosition.value, behavior: 'instant' })
-  }, 500)
-})
+    window.scrollTo({ top: scrollPosition.value, behavior: 'instant' });
+  }, 500);
+});
 
-
-
+// إعداد المراقبة للتمرير
 function setupObserver() {
   if (observer) {
-    observer.disconnect(); // افصل المراقبين السابقين
+    observer.disconnect();
   }
 
   const el = observerTarget.value?.$el || observerTarget.value;
@@ -178,7 +202,7 @@ function setupObserver() {
     async ([entry]) => {
       if (entry.isIntersecting && !pending.value && !noMore.value && searchQuery.value.trim()) {
         scrollPosition.value = window.scrollY;
-        await debouncedSearch(false); // تحميل المزيد
+        await debouncedSearch(false);
       }
     },
     { rootMargin: '300px', threshold: 0.1 }
@@ -187,29 +211,24 @@ function setupObserver() {
   observer.observe(el);
 }
 
-
 onMounted(() => {
-
   observer = new IntersectionObserver(
     (entries) => {
       if (entries[0].isIntersecting && !pending.value && !noMore.value && posts.value.length > 0) {
-        debouncedSearch(false); // Load more results without resetting
+        debouncedSearch(false);
       }
     },
     { threshold: 0.1 }
   );
 
   nextTick(() => {
-    setupObserver()
-  })
+    setupObserver();
+  });
 
   if (observerTarget.value) {
     observer.observe(observerTarget.value);
   }
-
 });
-
-
 
 function snippet(html) {
   const text = html.replace(/<[^>]+>/g, '');
@@ -225,6 +244,7 @@ function formatDate(dateStr) {
   });
 }
 </script>
+
 
 <style>
 .v-text-field input {

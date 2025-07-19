@@ -68,7 +68,6 @@
 
 <script setup>
 import { onMounted, ref, watch, nextTick } from 'vue'
-import debounce from 'lodash/debounce';
 import { usePosts } from '~/composables/usePosts.js'
 import { usePostStore } from '../stores/postStore'
 import { mdiCalendar , mdiMapMarkerOutline } from '@mdi/js'
@@ -76,6 +75,17 @@ import { useRouter } from 'vue-router'
 
 const router = useRouter()
 const selectedPost = useState('selected-post', () => null)
+
+
+function debounce(fn, delay) {
+  let timeout
+  return (...args) => {
+    clearTimeout(timeout)
+    timeout = setTimeout(() => {
+      fn(...args)
+    }, delay)
+  }
+}
 
 function goToPost(post) {
   selectedPost.value = post

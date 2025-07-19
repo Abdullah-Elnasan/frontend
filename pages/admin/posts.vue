@@ -1,6 +1,5 @@
 <script setup>
 import { onMounted, onBeforeUnmount, ref, watch, nextTick } from 'vue'
-import debounce from 'lodash/debounce';
 import { usePosts } from '~/composables/usePosts.js'
 import { usePostStore } from '~/stores/postStore'
 import { useRouter } from 'vue-router'
@@ -20,6 +19,17 @@ function goToPost(post) {
     router.push(`/posts/${post.slug}`)
 }
 
+
+
+function debounce(fn, delay) {
+  let timeout
+  return (...args) => {
+    clearTimeout(timeout)
+    timeout = setTimeout(() => {
+      fn(...args)
+    }, delay)
+  }
+}
 // Store & Composables
 const postsStore = usePostStore()
 const { posts, error, pending, loadMore, noMore } = usePosts()
