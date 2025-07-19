@@ -1,0 +1,31 @@
+/* assets/main.css */
+@font-face {
+  font-family: 'Al-Jazeera';
+  src: url('/fonts/Al-Jazeera-Arabic-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Helvetica';
+  src: url('/fonts/Helvetica.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Aljazeera';
+  src: url('/fonts/Aljazeera.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body,
+.v-application{
+  font-family: 'Al-Jazeera', 'Helvetica', serif !important;
+}
+
+h1 {
+    font-family: 'Aljazeera', serif !important;
+    font-weight: bold !important;
+    color: #26949b;
+}
+
