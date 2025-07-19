@@ -1,18 +1,31 @@
-FROM node:18 AS builder
+# المرحلة الأولى: البناء
+FROM node:20-alpine AS builder
 
+# تحديد مجلد العمل داخل الحاوية
 WORKDIR /app
 
-COPY package*.json ./
+# نسخ ملفات المشروع
+COPY . .
+
+# تثبيت التبعيات
 RUN npm install
 
-COPY . .
+# بناء المشروع (ينتج مجلد .output)
 RUN npm run build
 
-FROM node:18
+# المرحلة الثانية: التشغيل
+FROM node:20-alpine
+
+# مجلد العمل في الحاوية النهائية
 WORKDIR /app
 
-COPY --from=builder /app ./
+# نسخ فقط ملفات التشغيل من المرحلة السابقة
+COPY --from=builder /app/.output .output
+COPY --from=builder /app/package.json ./
+COPY --from=builder /app/node_modules ./node_modules
 
+# فتح المنفذ الذي يستخدمه Nuxt
 EXPOSE 3000
 
+# أمر التشغيل
 CMD ["node", ".output/server/index.mjs"]

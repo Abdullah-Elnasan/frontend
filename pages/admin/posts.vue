@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted, onBeforeUnmount, ref, watch, nextTick } from 'vue'
-import { debounce } from 'lodash'
+import debounce from 'lodash/debounce';
 import { usePosts } from '~/composables/usePosts.js'
 import { usePostStore } from '~/stores/postStore'
 import { useRouter } from 'vue-router'

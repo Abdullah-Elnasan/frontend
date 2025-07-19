@@ -68,7 +68,7 @@
 
 <script setup>
 import { onMounted, ref, watch, nextTick } from 'vue'
-import { debounce } from 'lodash'
+import debounce from 'lodash/debounce';
 import { usePosts } from '~/composables/usePosts.js'
 import { usePostStore } from '../stores/postStore'
 import { mdiCalendar , mdiMapMarkerOutline } from '@mdi/js'

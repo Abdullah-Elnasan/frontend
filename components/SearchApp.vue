@@ -82,7 +82,7 @@
 <script setup>
 import { mdiClipboardTextSearchOutline, mdiCalendar } from '@mdi/js';
 import { ref, watch, onMounted, onUnmounted } from 'vue';
-import { debounce } from 'lodash';
+import debounce from 'lodash/debounce';
 
 const path2 = mdiClipboardTextSearchOutline;
 const path = mdiCalendar;
