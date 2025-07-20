@@ -32,5 +32,5 @@ jobs:
             docker stop nuxt-frontend
             docker container prune
             docker-compose build --no-cache frontend
-            docker-compose up -d --build
+            docker-compose up -d
           EOF
