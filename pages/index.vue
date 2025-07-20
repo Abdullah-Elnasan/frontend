@@ -24,10 +24,8 @@
                 </div>
                 <v-chip color="secondary">{{ p.category.name }}</v-chip>
               </v-card-title>
-
               <v-card-text v-html="snippet(p.content)" class="pa-4 text-justify"
                 style="font-size:var(--article-body-font-size); font-weight: 500;  white-space: pre-wrap;" />
-
               <v-card-actions v-if="p.slug" class="d-flex justify-space-between align-center">
                 <div>
                   <v-btn density="default" icon="mdi-open-in-new" style="color: rgb(38 148 155)" />
