@@ -10,7 +10,6 @@ const config = useRuntimeConfig()
 
     // تحقق من أن query ليست undefined أو فارغة
     if (!query || query.trim() === '') {
-        console.log('No valid search query provided, skipping request');
         return { posts: [], error: null, pending: false };
     }
 
@@ -53,7 +52,6 @@ const config = useRuntimeConfig()
         const posts = await $fetch(`${config.public.apiBase}/posts?search=${encodedQuery}`);
         return { posts, error: null, pending: false };
     } catch (error) {
-        console.error('Error fetching posts:', error);
         return { posts: [], error, pending: false };
     }
 }

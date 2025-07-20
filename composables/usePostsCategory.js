@@ -1,6 +1,5 @@
 
 export function usePostsCategory(id) {
-    console.log('usePostsCategory called with id:', id)
     const posts = ref([])
     const error = ref(null)
     const pending = ref(false)
@@ -14,7 +13,6 @@ export function usePostsCategory(id) {
         try {
             const res = await fetch(`${config.public.apiBase}/categories/category/${id.value}?page=${page.value}`)
             const data = await res.json()
-            console.log(data)
             const newPosts = data.posts || []
             const limit = data.limit || 15;
             if (data.total && data.total < limit) {

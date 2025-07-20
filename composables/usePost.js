@@ -9,7 +9,6 @@ export async function usePost(slug) {
     const res = await fetch(`${config.public.apiBase}/posts/${slug}`)
       const data = await res.json()
       post.value = data 
-      console.log(post.value)
   }catch (err) {
       error.value = err
     } finally {

@@ -1,6 +1,5 @@
 export async function createCategory(postData) {
   const config = useRuntimeConfig()
-  console.log(postData)
   try {
     // جلب التوكن من localStorage
     const token = localStorage.getItem('token') || ''

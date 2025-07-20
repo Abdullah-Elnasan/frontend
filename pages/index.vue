@@ -8,8 +8,9 @@
       <template v-if="!pending && posts.length > 0" v-for="p in posts" :key="p.id">
         <v-col cols="12" md="12" dir="rtl">
           <v-card @click="goToPost(p)" class="hoverable d-flex flex-row justify-space-between align-center">
-            <v-col class="v-col-12 v-col-sm-3">
+            <v-col class="v-col-12 v-col-sm-3 title-600-center">
               <v-img height="200px" width="100%" class="img-card" :src="p.image" eager />
+              <span class="title-600 ps-3 Aljazeera">{{ p.title }}</span>
             </v-col>
 
             <v-col class="v-col-12 v-col-sm-9 border-start">
@@ -19,7 +20,7 @@
                   <v-avatar size="50">
                     <v-img alt="John" src="/author.jpg" />
                   </v-avatar>
-                  <span class="ps-3 Aljazeera">{{ p.title }}</span>
+                  <span class="title-601 ps-3 Aljazeera">{{ p.title }}</span>
                 </div>
                 <v-chip color="secondary">{{ p.category.name }}</v-chip>
               </v-card-title>
@@ -34,7 +35,7 @@
                 </div>
                 <v-card-subtitle class="d-flex justify-end align-center">
                   <svg-icon type="mdi" :path="path2" />
-                  <span class="pt-1 pe-2">{{ p.governorate + " -"  + p.city }}</span>
+                  <span class="pt-1 pe-2">{{ p.governorate + " -" + p.city }}</span>
                 </v-card-subtitle>
                 <v-card-subtitle class="d-flex justify-end align-center">
                   <svg-icon type="mdi" :path="path" />
@@ -54,7 +55,7 @@
         لا توجد منشورات حالياً.
       </v-alert>
 
-      <v-col cols="12" ref="observerTarget" class="text-center py-4 " >
+      <v-col cols="12" ref="observerTarget" class="text-center py-4 ">
         <v-skeleton-loader v-if="pending && posts.length" v-for="n in 3" :key="'skeleton-' + n" type="card, article"
           class="mb-4" />
         <v-progress-circular v-if="pending && posts.length" indeterminate size="30" color="primary" />
@@ -70,7 +71,7 @@
 import { onMounted, ref, watch, nextTick } from 'vue'
 import { usePosts } from '~/composables/usePosts.js'
 import { usePostStore } from '../stores/postStore'
-import { mdiCalendar , mdiMapMarkerOutline } from '@mdi/js'
+import { mdiCalendar, mdiMapMarkerOutline } from '@mdi/js'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
@@ -132,7 +133,7 @@ function setupObserver() {
 
 onMounted(async () => {
   if (!posts.value.length && !pending.value && !noMore.value) {
-      debouncedLoadMore()
+    debouncedLoadMore()
   }
 
   const savedScrollY = sessionStorage.getItem('scrollY')
@@ -180,7 +181,7 @@ function formatDate(dateStr) {
 </script>
 
 
-<style scoped>
+<style scoped lang="scss">
 path {
   fill: #26949b !important;
 }
@@ -188,6 +189,14 @@ path {
 .Aljazeera {
   font-family: 'Aljazeera', serif !important;
   font-size: var(--article-body-font-size) !important;
+}
+
+.title-601 {
+  display: inline;
+}
+
+.title-600 {
+  display: none;
 }
 
 .img-card .v-img__img--cover {
@@ -213,13 +222,17 @@ path {
 }
 
 @media (max-width: 900px) {
+
   .v-card-title {
     padding: 0px !important;
     padding-right: 12px !important;
   }
 
   .v-card-text {
-    padding: 12px !important;
+    padding-right: 12px !important;
+    padding-left: 12px !important;
+    padding-bottom: 12px !important;
+    padding-top: 16px !important;
   }
 
   .v-card-actions {
@@ -231,7 +244,22 @@ path {
   }
 }
 
+
 @media (max-width: 600px) {
+  .v-main {
+    .v-container {
+      padding: 0px !important;
+    }
+  }
+
+  .v-card-title {
+    padding-right: 0px !important;
+  }
+
+  .v-container {
+    padding: 0px !important;
+  }
+
   .v-card {
     flex-direction: column !important;
     align-items: center !important;
@@ -240,6 +268,51 @@ path {
   .border-start {
     border-right: 0 !important;
     border-top: 2px solid rgb(38 148 155) !important;
+  }
+
+  .v-card-actions {
+    gap: 0 !important;
+    padding: 0 !important;
+
+  }
+
+  .v-card-actions>div {
+    font-size: 0.8rem !important;
+
+  }
+
+  .v-card-actions>div>button {
+    width: 24px !important;
+    height: 24px !important;
+  }
+
+  .v-card-subtitle {
+    padding: 0 !important;
+  }
+
+
+}
+
+
+@media (max-width: 500px) {
+  .title-601 {
+    display: none;
+  }
+
+  .title-600 {
+    display: block;
+  }
+
+  .title-600-center {
+    text-align: center;
+  }
+
+  .img-card {
+    margin-bottom: 10px !important;
+  }
+
+  .v-card-actions>div {
+    font-size: 0.7rem !important;
   }
 }
 

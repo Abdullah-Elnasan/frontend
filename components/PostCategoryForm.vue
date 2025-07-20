@@ -76,10 +76,8 @@ function close() {
 function submitForm() {
     const postData = {}
     postData.name = form.name
-    console.log(props.cate?.id )
     if (isEdit.value && props.cate?.id) {
         postData.id =  props.cate.id
-        console.log(postData)
     }
     emit('submit', postData, setSuccessMessage)
 }

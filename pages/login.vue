@@ -33,7 +33,6 @@ async function onSubmit(event) {
 
     try {
         const res = await login({ email: state.email, password: state.password })
-        console.log(res.token)
         if(res.token){
             localStorage.setItem('token', res.token)
             toast.add({ title: 'تم الدخول', description: 'تم تسجيل الدخول بنجاح.', color: 'success' })

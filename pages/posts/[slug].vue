@@ -57,15 +57,12 @@ onMounted(async () => {
       const { post, error } = await usePost(slug)
 
       if (error.value) {
-        console.error('فشل في جلب المنشور:', error.value)
         return
       }
       postSlug.value = post.value
-      console.log(post.value)
 
     }
   } catch (err) {
-    console.error('خطأ غير متوقع:', err)
   } finally {
     pending.value = false
   }

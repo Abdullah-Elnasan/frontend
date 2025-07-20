@@ -44,7 +44,6 @@ const debouncedLoadMore = debounce(loadMore, 300)
 async function handlePostSubmit(formData, setSuccessMessage) {
     try {
         if (!(formData instanceof FormData)) {
-            console.warn('postData يجب أن يكون من نوع FormData')
             return
         }
 
@@ -55,7 +54,6 @@ async function handlePostSubmit(formData, setSuccessMessage) {
             : await createPost(formData)  // دالة إنشاء API
 
         if (error) {
-            console.error('فشل في العملية:', error)
             return
         }
 

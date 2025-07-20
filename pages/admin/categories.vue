@@ -56,7 +56,6 @@ function addCate() {
     showModal.value = true
 }
 function editCate(id) {
-    console.log(id)
     const cate1 = categories.value.find(p => p.id === id)
     if (cate1) {
         editingCate.value = { ...cate1 }
@@ -80,14 +79,12 @@ async function handlePostSubmit(formData, setSuccessMessage) {
     try {
 
         const isEdit = formData.id 
-        console.log(isEdit)
 
         const { data, error } = isEdit
             ? await updateCate(formData)  // دالة تحديث API
             : await createCategory(formData)  // دالة إنشاء API
 
         if (error) {
-            console.error('فشل في العملية:', error)
             return
         }
 
@@ -109,7 +106,6 @@ onMounted(async () => {
 
     categoriesApi.value = categories.value
     if (!localStorage.getItem('token')) {
-        console.log(localStorage.getItem('token'))
         router.push('/login')
     }
 

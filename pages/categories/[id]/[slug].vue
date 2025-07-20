@@ -10,6 +10,7 @@
           <v-card  @click="goToPost(p)"class="hoverable d-flex flex-row justify-space-between align-center">
             <v-col class="v-col-12 v-col-sm-3">
               <v-img height="200px" width="100%" class="img-card" :src="p.image" eager />
+              <span class="title-600 ps-3 Aljazeera">{{ p.title }}</span>
             </v-col>
 
             <v-col class="v-col-12 v-col-sm-9 border-start">
@@ -19,7 +20,7 @@
                   <v-avatar size="50">
                     <v-img alt="John" src="/author.jpg" />
                   </v-avatar>
-                  <span class="ps-3 Aljazeera">{{ p.title }}</span>
+                  <span class="title-601 ps-3 Aljazeera">{{ p.title }}</span>
                 </div>
                 <v-chip color="secondary">{{ p.category.name }}</v-chip>
               </v-card-title>
@@ -104,7 +105,6 @@ const debouncedLoadMore = debounce(loadMore, 300)
 
 function setupObserver() {
   const el = observerTarget.value?.$el || observerTarget.value
-  console.log('Setting up observer for: index', el)
   if (!el || !(el instanceof Element)) return
 
   if (!observer) {
@@ -172,7 +172,7 @@ function formatDate(dateStr) {
 </script>
 
 
-<style scoped>
+<style scoped lang="scss">
 path {
   fill: rgb(38 148 155) !important;
 }
@@ -181,7 +181,13 @@ path {
   font-family: 'Aljazeera', serif !important;
   font-size: var(--article-body-font-size) !important;
 }
+.title-601 {
+  display: inline;
+}
 
+.title-600 {
+  display: none;
+}
 .img-card .v-img__img--cover {
   object-fit: contain !important;
 }
@@ -210,8 +216,11 @@ path {
     padding-right: 12px !important;
   }
 
-  .v-card-text {
-    padding: 12px !important;
+    .v-card-text {
+    padding-right: 12px !important;
+    padding-left: 12px !important;
+    padding-bottom: 12px !important;
+    padding-top: 16px !important;
   }
 
   .v-card-actions {
@@ -222,8 +231,21 @@ path {
     padding: 6px !important;
   }
 }
-
 @media (max-width: 600px) {
+  .v-main {
+    .v-container {
+      padding: 0px !important;
+    }
+  }
+
+  .v-card-title {
+    padding-right: 0px !important;
+  }
+
+  .v-container {
+    padding: 0px !important;
+  }
+
   .v-card {
     flex-direction: column !important;
     align-items: center !important;
@@ -233,8 +255,51 @@ path {
     border-right: 0 !important;
     border-top: 2px solid rgb(38 148 155) !important;
   }
+
+  .v-card-actions {
+    gap: 0 !important;
+    padding: 0 !important;
+
+  }
+
+  .v-card-actions>div {
+    font-size: 0.8rem !important;
+
+  }
+
+  .v-card-actions>div>button {
+    width: 24px !important;
+    height: 24px !important;
+  }
+
+  .v-card-subtitle {
+    padding: 0 !important;
+  }
+
+
 }
 
+@media (max-width: 500px) {
+    .title-601 {
+    display: none;
+  }
+
+  .title-600 {
+    display: block;
+  }
+
+  .title-600-center {
+    text-align: center;
+  }
+
+  .img-card{
+    margin-bottom: 10px !important;
+  }
+
+    .v-card-actions>div {
+    font-size: 0.6rem !important;
+  }
+}
 html,
 body {
   scroll-behavior: auto !important;

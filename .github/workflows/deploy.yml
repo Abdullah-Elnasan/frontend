@@ -1,0 +1,36 @@
+name: Deploy Nuxt App to VPS
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: Deploy to VPS
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up SSH key
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_KEY }}
+
+      - name: Copy project to VPS
+        run: |
+          rsync -az --delete \
+            -e "ssh -o StrictHostKeyChecking=no" \
+            ./ root@46.38.238.97:/home/blog-alaa-albitar/frontend
+
+      - name: Run docker-compose on VPS
+        run: |
+          ssh -o StrictHostKeyChecking=no root@46.38.238.97 << 'EOF'
+            cd /home/blog-alaa-albitar/
+            docker stop nuxt-frontend
+            docker container prune
+            docker-compose build --no-cache frontend
+            docker-compose up -d --build
+          EOF

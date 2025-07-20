@@ -43,4 +43,13 @@ path {
 .v-btn--slim:hover {
     background-color: rgba(0, 0, 0, 0.2) !important;
 }
+
+
+@media (max-width: 600px) {
+  .v-main {
+    .v-container {
+      padding: 0px !important;
+    }
+  }
+  }
 </style>

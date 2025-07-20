@@ -6,7 +6,7 @@
             <form @submit.prevent="submitForm">
                 <label>
                     العنوان:
-                    <input v-model="form.title" required />
+                    <input v-model="form.title" required maxlength="60" />
                 </label>
 
                 <label>
@@ -153,7 +153,8 @@ function submitForm() {
     postData.append('category_id', form.category_id)
     postData.append('governorate', form.governorate)
     postData.append('city', form.city)
-    postData.append('created_at', form.created_at)
+    const isoDate = new Date(form.created_at + 'T00:00:00Z').toISOString();
+    postData.append('created_at', isoDate);
 
     if (form.image) {
         postData.append('image', form.image)
@@ -164,7 +165,7 @@ function submitForm() {
     }
 
     emit('submit', postData, setSuccessMessage)
-    
+
 }
 
 function setSuccessMessage(msg) {

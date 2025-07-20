@@ -14,7 +14,6 @@ export async function login({ email, password }) {
             throw new Error('فشل في تسجيل الدخول')
         }
         const result = await res.json();
-        console.log(result)
         return result  // ← تحليل الاستجابة كـ JSON
 
     } catch (error) {
