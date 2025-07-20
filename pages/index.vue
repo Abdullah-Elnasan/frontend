@@ -26,7 +26,7 @@
               </v-card-title>
 
               <v-card-text v-html="snippet(p.content)" class="pa-4 text-justify"
-                style="font-size:var(--article-body-font-size); font-weight: 500;" />
+                style="font-size:var(--article-body-font-size); font-weight: 500;  white-space: pre-wrap;" />
 
               <v-card-actions v-if="p.slug" class="d-flex justify-space-between align-center">
                 <div>
@@ -248,7 +248,7 @@ path {
 @media (max-width: 600px) {
   .v-main {
     .v-container {
-      padding: 0px !important;
+      padding: 8px !important;
     }
   }
 

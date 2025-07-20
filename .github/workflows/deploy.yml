@@ -27,10 +27,10 @@ jobs:
 
       - name: Run docker-compose on VPS
         run: |
-          ssh -o StrictHostKeyChecking=no root@46.38.238.97 << 'EOF'
+          ssh -o StrictHostKeyChecking=no root@46.38.238.97 << EOF
             cd /home/blog-alaa-albitar/
             docker stop nuxt-frontend
-            docker container prune
+            docker container prune -f
             docker-compose build --no-cache frontend
             docker-compose up -d
           EOF

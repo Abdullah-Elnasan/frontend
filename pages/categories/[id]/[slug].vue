@@ -7,7 +7,7 @@
 
       <template v-if="!pending && posts.length > 0" v-for="p in posts" :key="p.id">
         <v-col cols="12" md="12" dir="rtl">
-          <v-card  @click="goToPost(p)"class="hoverable d-flex flex-row justify-space-between align-center">
+          <v-card @click="goToPost(p)" class="hoverable d-flex flex-row justify-space-between align-center">
             <v-col class="v-col-12 v-col-sm-3">
               <v-img height="200px" width="100%" class="img-card" :src="p.image" eager />
               <span class="title-600 ps-3 Aljazeera">{{ p.title }}</span>
@@ -26,7 +26,7 @@
               </v-card-title>
 
               <v-card-text v-html="snippet(p.content)" class="pa-4 text-justify"
-                style="font-size:var(--article-body-font-size); font-weight: 500;" />
+                style="font-size:var(--article-body-font-size); font-weight: 500; white-space: pre-wrap;" />
 
               <v-card-actions v-if="p.slug" class="d-flex justify-space-between align-center">
                 <div>
@@ -59,7 +59,8 @@
         <v-skeleton-loader v-if="pending && posts.length" v-for="n in 3" :key="'skeleton-' + n" type="card, article"
           class="mb-4" />
         <v-progress-circular v-if="pending && posts.length" indeterminate size="30" color="primary" />
-        <v-progress-circular v-else-if="!noMore" indeterminate size="30" color="primary" dir="rtl"></v-progress-circular>
+        <v-progress-circular v-else-if="!noMore" indeterminate size="30" color="primary"
+          dir="rtl"></v-progress-circular>
         <v-alert v-else type="info" dir="rtl" class="text-start">انتهت المقالات.</v-alert>
       </v-col>
     </v-row>
@@ -181,6 +182,7 @@ path {
   font-family: 'Aljazeera', serif !important;
   font-size: var(--article-body-font-size) !important;
 }
+
 .title-601 {
   display: inline;
 }
@@ -188,6 +190,7 @@ path {
 .title-600 {
   display: none;
 }
+
 .img-card .v-img__img--cover {
   object-fit: contain !important;
 }
@@ -216,7 +219,7 @@ path {
     padding-right: 12px !important;
   }
 
-    .v-card-text {
+  .v-card-text {
     padding-right: 12px !important;
     padding-left: 12px !important;
     padding-bottom: 12px !important;
@@ -231,10 +234,11 @@ path {
     padding: 6px !important;
   }
 }
+
 @media (max-width: 600px) {
   .v-main {
     .v-container {
-      padding: 0px !important;
+      padding: 8px !important;
     }
   }
 
@@ -280,7 +284,7 @@ path {
 }
 
 @media (max-width: 500px) {
-    .title-601 {
+  .title-601 {
     display: none;
   }
 
@@ -292,14 +296,15 @@ path {
     text-align: center;
   }
 
-  .img-card{
+  .img-card {
     margin-bottom: 10px !important;
   }
 
-    .v-card-actions>div {
+  .v-card-actions>div {
     font-size: 0.6rem !important;
   }
 }
+
 html,
 body {
   scroll-behavior: auto !important;
