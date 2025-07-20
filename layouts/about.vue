@@ -6,7 +6,7 @@
     <app-bar></app-bar>
     <!-- Navigation Drawer -->
     <navgation-bar></navgation-bar>
-    <!-- Main Content -->
+    <!-- Main Content 2-->
     <v-main class="d-flex align-center justify-center" height="auto">
         <v-container>
             <v-sheet border="dashed md" color="surface-light" height="auto" rounded="lg" width="100%">
