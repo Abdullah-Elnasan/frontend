@@ -16,7 +16,7 @@
       </v-card-title>
       <!-- <v-card-subtitle>{{ formatDate(postSlug.created_at) }}</v-card-subtitle> -->
       <v-card-text v-html="postSlug.content" class="pa-5 ps-5 ms-2 text-justify"
-        style="font-size:var(--article-body-font-size); font-weight: 500;" />
+        style="font-size:var(--article-body-font-size); font-weight: 500;  white-space: pre-wrap;" />
 
         <v-card-actions v-if="postSlug.slug" class="d-flex justify-space-start align-center">
                 <v-card-subtitle class="d-flex justify-end align-center">
