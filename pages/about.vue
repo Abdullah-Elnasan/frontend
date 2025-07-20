@@ -139,10 +139,18 @@ definePageMeta({
         border-radius: 50%;
         outline: 10px solid white;
         object-fit: cover !important;
+
+        .v-img__img {
+            object-fit: cover !important;
+        }
     }
 
-    .v-img__img--contain {
+    .v-img__img--contain>img {
         // -o-object-fit: contain;
+        object-fit: cover !important;
+    }
+
+    .v-img__img {
         object-fit: cover !important;
     }
 
