@@ -12,20 +12,22 @@
           </v-avatar>
           <span class="ps-3 Aljazeera">{{ postSlug.title }}</span>
         </div>
-        <v-chip color="secondary">{{ postSlug.category.name }}</v-chip>
       </v-card-title>
       <!-- <v-card-subtitle>{{ formatDate(postSlug.created_at) }}</v-card-subtitle> -->
       <v-card-text v-html="postSlug.content" class="pa-5 ps-5 ms-2 text-justify"
         style="font-size:var(--article-body-font-size); font-weight: 500;  white-space: pre-wrap;" />
 
         <v-card-actions v-if="postSlug.slug" class="d-flex justify-space-start align-center">
-                <v-card-subtitle class="d-flex justify-end align-center">
+                <v-card-subtitle class="d-flex justify-end align-center ps-1">
                   <svg-icon type="mdi" :path="path2" />
-                  <span class="pt-1 pe-2">{{ postSlug.governorate + " -"  + postSlug.city }}</span>
+                  <span class="pt-1">{{ postSlug.governorate + " -"  + postSlug.city }}</span>
                 </v-card-subtitle>
-                <v-card-subtitle class="d-flex justify-end align-center">
+                <v-card-subtitle class="d-flex justify-end align-center ps-1">
                   <svg-icon type="mdi" :path="path" />
-                  <span class="pt-1 pe-2 ps-1">{{  formatDate(postSlug.created_at)  }}</span>
+                  <span class="pt-1">{{  formatDate(postSlug.created_at)  }}</span>
+                </v-card-subtitle>
+                <v-card-subtitle class="d-flex justify-end align-center ps-1">
+                          <v-chip color="secondary">{{ postSlug.category.name }}</v-chip>
                 </v-card-subtitle>
               </v-card-actions>
     </v-card>

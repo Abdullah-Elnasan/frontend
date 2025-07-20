@@ -29,7 +29,7 @@
               </p>
               <v-list v-if="posts.length">
                 <v-list-item v-for="p in posts" :key="p.id" class="ps-0 pe-0">
-                  <v-card :to="`/posts/${p.slug}`" class="hoverable d-flex flex-row justify-space-between align-center">
+                  <v-card @click="isActive.value = false" :to="`/posts/${p.slug}`" class="hoverable d-flex flex-row justify-space-between align-center">
                     <v-col class="v-col-12 v-col-sm-12 border-start-2 ps-0 pe-0">
                       <v-card-title class="d-flex justify-space-between align-center"
                         style="font-size: 1.3rem; font-weight: bold;">
@@ -39,7 +39,7 @@
                           </v-avatar>
                           <span class="ps-3 Aljazeera">{{ p.title }}</span>
                         </div>
-                        <v-chip color="secondary">{{ p.category.name }}</v-chip>
+                        <!-- <v-chip color="secondary">{{ p.category.name }}</v-chip> -->
                       </v-card-title>
 
                       <v-card-text v-html="snippet(p.content)" class="pa-4 text-justify"
@@ -51,9 +51,10 @@
                           <span class="text-grey">لقراءة كامل المقال</span>
                         </div>
                         <v-card-subtitle class="d-flex justify-end align-center">
-                          <span class="pt-1 pe-2">{{ formatDate(p.created_at) }}</span>
                           <svg-icon type="mdi" :path="path" />
+                          <span class="pt-1 pe-2">{{ formatDate(p.created_at) }}</span>
                         </v-card-subtitle>
+                        <!-- <v-chip color="secondary">{{ p.category.name }}</v-chip> -->
                       </v-card-actions>
                     </v-col>
                   </v-card>
@@ -266,6 +267,10 @@ function formatDate(dateStr) {
 @media (max-width: 500px) {
   .v-dialog>.v-overlay__content {
     width: calc(100% - 16px) !important;
+  }
+
+  .Aljazeera{
+    font-size: 1rem !important;
   }
 }
 </style>

@@ -3,7 +3,7 @@
         <v-row>
             <v-col cols="4" dir="rtl" class="text-center v-col-12 v-col-md-4 "
                 style="background-color: #26949b; height: 400px; position: relative; margin-top: 150px; ">
-                <div class="img-author"><v-img alt="alaa bitar" src="/author.jpg" /></div>
+                <div class="img-author"><img alt="alaa bitar" src="/author.jpg" /></div>
                 <div class="contact-author">
                     <div>
                         <h2>علاء محمد علي البيطار</h2>
@@ -131,7 +131,7 @@ definePageMeta({
     display: flex;
     justify-content: center;
 
-    .v-img {
+    img{
         position: absolute;
         height: 200px;
         width: 190px;
@@ -140,12 +140,10 @@ definePageMeta({
         outline: 10px solid white;
         object-fit: cover !important;
 
-        .v-img__img {
-            object-fit: cover !important;
-        }
     }
+    
 
-    .v-img__img--contain>img {
+    .v-img__img .v-img__img--contain {
         // -o-object-fit: contain;
         object-fit: cover !important;
     }
@@ -155,17 +153,6 @@ definePageMeta({
     }
 
 }
-
-// .img-author:before {
-//     content: "";
-//     position: absolute;
-//     height: 210px;
-//     width: 210px;
-//     top: -26%;
-//     right: 22.6%;
-//     border-radius: 50%;
-//     background-color: white;
-// }
 
 .contact-author {
     color: white;
@@ -208,6 +195,13 @@ definePageMeta({
     }
 }
 
+.v-img div  img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 90% !important;
+    height: 90% !important;
+}
 
 @media (max-width: 890px) {
     .tabel {
