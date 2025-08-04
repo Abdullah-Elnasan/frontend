@@ -9,7 +9,9 @@
             <v-app-bar-nav-icon @click="dropdownStore.toggle"></v-app-bar-nav-icon>
         </template>
 
-        <search-app></search-app>
+        <div style="width: 100px !important;">
+            <search-app ></search-app>
+        </div>
     </v-app-bar>
 </template>
 
@@ -18,3 +20,11 @@ const dropdownStore = useDropdownStore()
 
 
 </script>
+
+
+<style scoped>
+.v-btn--icon.v-btn--density-default {
+  width: 50px !important;
+}
+
+</style>

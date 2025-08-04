@@ -112,4 +112,6 @@ onMounted(async () => {
 .v-list-item-title {
   color: #26949b !important
 }
+
+
 </style>

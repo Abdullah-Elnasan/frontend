@@ -264,6 +264,8 @@ function formatDate(dateStr) {
   padding-right: 10 !important;
 }
 
+
+
 @media (max-width: 500px) {
   .v-dialog>.v-overlay__content {
     width: calc(100% - 16px) !important;
